@@ -18,6 +18,46 @@ medals_by_country=data.groupby("Country")["Medal"].count()
 print(medals_by_country)
 data_ind=data.set_index("City")
 print(data_ind)
+df1=data['Sport'].value_counts()
+print(df1)
+Ireland=data[data['Country']=='Ireland']
+print(Ireland)
+Ireland_gender=Ireland['Gender'].value_counts()
+print(Ireland_gender)
+IrishMedals=Ireland.groupby('Sport')['Medal'].count().sort_values(ascending=False)
+print(IrishMedals)
+data_na=data.dropna()
+print(data_na)
+data_complete=data.fillna(0)
+print(data_complete)
 cities=["Beijing","Sydney"]
 print(data[data["City"].isin(cities)])
 print(data_ind.loc[cities])
+print(data.iloc[0:5,2:4])
+print(data.loc["2000":"2008"])
+data_na1=data.isnull().sum()
+print(data_na1)
+data.dropna(inplace=True)
+data.Year=data.Year.astype(int)
+data[['City','Year']].drop_duplicates().reset_index(drop=True)
+for vars in data.columns:
+    rows=data.shape[0]
+    cols=data.shape[1]
+print(f'rows:{rows}')
+print(f'columns:{cols}')
+Cities = data["City"].value_counts()
+print(Cities)
+Years = data["Year"].value_counts()
+print(Years)
+host_country ={'Canada':'Montreal','Russia':'Moscow','USA':'Los Angeles','Japan':'Seoul','Spain':'Barcelona','Greece':'Athens','Australia':'Sydney','China':'Beijing'}
+for key, value in host_country.items():
+    print("the host country was" + str (key)+"in the capital called" + str (value))
+import numpy as np
+np_medals = np.array(medals_by_country)
+avg = np.mean(np_medals)
+print("Average per country is :" + str(avg))
+med = np.median(np_medals)
+print("Median per country is :" + str(med))
+
+
+
