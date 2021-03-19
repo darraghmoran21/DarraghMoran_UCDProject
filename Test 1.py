@@ -37,10 +37,7 @@ def cleandata():
     print(data.loc["2000":"2008"])
     missing_val=data.isnull().sum()
     print(missing_val)
-    data[data.isnull().any(axis=1)]
     data.dropna(axis=0, inplace=True)
-    data.Year=data.Year.astype(int)
-    data[['City','Year']].drop_duplicates().reset_index(drop=True)
     data4=pd.read_csv("Summer-Olympic-medals-1976-to-2008.csv",index_col = 0)
     for lab,row in data4.iterrows():
         print(lab)
@@ -56,6 +53,17 @@ def analyzingdata():
     host_country ={'Canada':'Montreal','Russia':'Moscow','USA':'Los Angeles','Japan':'Seoul','Spain':'Barcelona','Greece':'Athens','Australia':'Sydney','China':'Beijing'}
     for key, value in host_country.items():
         print("the host country was" + str (key)+"in the city called" + str (value))
+    tennis_medals=data[data['Sport']=='Tennis']
+    sport_medals_tennis=pd.DataFrame(tennis_medals.groupby(['Year','Sport','Medal']).size()).reset_index()
+    sport_medals_tennis.columns = ['Year','Sport','Medal','Count']
+    print(sport_medals_tennis.head(3))
+    boxing_medals=data[data['Sport']=='Boxing']
+    sport_medals_boxing=pd.DataFrame(boxing_medals.groupby(['Year','Sport','Medal']).size()).reset_index()
+    sport_medals_boxing.columns = ['Year', 'Sport', 'Medal', 'Count']
+    print(sport_medals_boxing.head(3))
+    data_cat1=pd.concat([sport_medals_tennis,sport_medals_boxing],axis=1)
+    print(data_cat1)
+
 
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -77,7 +85,7 @@ def visualizeddata2():
     plt.title("Medals won by USA per year")
     plt.show()
 
-cleandata()
+
 
 
 
